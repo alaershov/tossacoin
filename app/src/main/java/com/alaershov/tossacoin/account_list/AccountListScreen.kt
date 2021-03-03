@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.alaershov.tossacoin.navigation.Navigation
 import com.alaershov.tossacoin.navigation.Screens
@@ -19,7 +20,11 @@ fun AccountListScreen(text: String) {
     }
 }
 
-@Preview
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    device = Devices.PIXEL_4
+)
 @Composable
 private fun Preview() {
     AccountListScreen("Preview")

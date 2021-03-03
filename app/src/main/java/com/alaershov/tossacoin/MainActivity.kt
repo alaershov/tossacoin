@@ -31,16 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         modo.init(savedInstanceState, render, Screens.Home())
-    }
-
-    override fun onResume() {
-        super.onResume()
         modo.render = render
-    }
-
-    override fun onPause() {
-        modo.render = null
-        super.onPause()
     }
 }
 

@@ -1,5 +1,6 @@
 package com.alaershov.tossacoin.navigation.compose
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -10,14 +11,24 @@ import com.github.terrakok.modo.NavigationRender
 import com.github.terrakok.modo.NavigationState
 import com.github.terrakok.modo.Screen
 
-class ComposeRender : NavigationRender {
+class ComposeRender(
+    private val exitAction: () -> Unit
+) : NavigationRender {
+
+    constructor(
+        activity: Activity,
+    ) : this(exitAction = { activity.finish() })
 
     var state: NavigationState by mutableStateOf(NavigationState())
         private set
 
     override fun invoke(state: NavigationState) {
-        this.state = state
         Log.d("Modo", "invoke ComposeRender with $state")
+        this.state = state
+        if (state.chain.isEmpty()) {
+            Log.d("Modo", "invoke ComposeRender exit action, chain is empty")
+            exitAction.invoke()
+        }
     }
 }
 

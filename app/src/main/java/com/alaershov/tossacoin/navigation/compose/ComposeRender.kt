@@ -4,29 +4,26 @@ import android.util.Log
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.github.terrakok.modo.NavigationRender
 import com.github.terrakok.modo.NavigationState
 import com.github.terrakok.modo.Screen
 
 class ComposeRender : NavigationRender {
 
-    private val _state = MutableLiveData<NavigationState>()
-    val state: LiveData<NavigationState>
-        get() = _state
+    var state: NavigationState by mutableStateOf(NavigationState())
+        private set
 
     override fun invoke(state: NavigationState) {
-        _state.value = state
+        this.state = state
         Log.d("Modo", "invoke ComposeRender with $state")
     }
 }
 
 @Composable
 fun NavigationStateRender(render: ComposeRender) {
-    val navigationState: NavigationState by render.state.observeAsState(NavigationState())
-    navigationState.chain.lastOrNull()?.let { ScreenRender(it) }
+    render.state.chain.lastOrNull()?.let { ScreenRender(it) }
 }
 
 @Composable

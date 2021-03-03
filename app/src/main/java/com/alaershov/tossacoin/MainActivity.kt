@@ -11,17 +11,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.alaershov.tossacoin.ui.theme.TossACoinTheme
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TossACoinTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+            TossACoinApp {
+                MainScreen()
             }
         }
     }
+}
+
+@Composable
+private fun TossACoinApp(content: @Composable () -> Unit) {
+    TossACoinTheme {
+        Surface(color = MaterialTheme.colors.background) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun MainScreen() {
+    Greeting("Android")
 }
 
 @Composable
@@ -32,7 +44,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    TossACoinTheme {
-        Greeting("Android")
+    TossACoinApp {
+        MainScreen()
     }
 }

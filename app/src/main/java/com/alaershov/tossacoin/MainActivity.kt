@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.alaershov.tossacoin.home.HomeScreen
 import com.alaershov.tossacoin.navigation.Navigation
@@ -52,7 +53,11 @@ private fun TossACoinApp(content: @Composable () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    device = Devices.PIXEL_4
+)
 @Composable
 private fun Preview() {
     TossACoinApp {

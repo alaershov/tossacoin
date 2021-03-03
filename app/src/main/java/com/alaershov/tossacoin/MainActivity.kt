@@ -5,20 +5,41 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.alaershov.tossacoin.home.HomeScreen
+import com.alaershov.tossacoin.navigation.Navigation
+import com.alaershov.tossacoin.navigation.Screens
+import com.alaershov.tossacoin.navigation.compose.ComposeRender
+import com.alaershov.tossacoin.navigation.compose.NavigationStateRender
+import com.alaershov.tossacoin.navigation.compose.init
 import com.alaershov.tossacoin.ui.theme.TossACoinTheme
 
 class MainActivity : AppCompatActivity() {
+
+    private val modo = Navigation.modo
+
+    private val render = ComposeRender()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TossACoinApp {
-                MainScreen()
+                NavigationStateRender(render)
             }
         }
+
+        modo.init(savedInstanceState, render, Screens.Home())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        modo.render = render
+    }
+
+    override fun onPause() {
+        modo.render = null
+        super.onPause()
     }
 }
 
@@ -31,20 +52,10 @@ private fun TossACoinApp(content: @Composable () -> Unit) {
     }
 }
 
-@Composable
-fun MainScreen() {
-    Greeting("Android")
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+private fun Preview() {
     TossACoinApp {
-        MainScreen()
+        HomeScreen("Preview")
     }
 }
